@@ -1,0 +1,15 @@
+name,email,role
+Alice,alice@example.com,admin
+Bob,,user
+Charlie,charlie@example.com,moderator
+David,david@example.com,adminn
+Eve,eve@example,manager
+Frank,frank@example.com,userr
+Grace,grace@example.com,
+, , 
+Hannah,hannah@example.com,admin
+Igor,igor@example.com,moderator
+Jack,jack@example.com,admin
+, , 
+Lily,lily@example.com,admin
+Megan,,admin

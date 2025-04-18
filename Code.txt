@@ -1,0 +1,77 @@
+import csv
+import requests
+import logging
+import os
+
+# Directory and file paths
+
+BASE_DIR = "/content/drive/MyDrive/CodeChallenge"
+os.makedirs(BASE_DIR, exist_ok=True)
+
+CSV_FILE_PATH = os.path.join(BASE_DIR, "users.csv")
+LOG_FILE_PATH = os.path.join(BASE_DIR, "error_log.txt")
+
+# Setup a custom logger instead of using root
+logger = logging.getLogger("user_creation_logger")
+logger.setLevel(logging.ERROR)
+
+# Clear previous handlers if script is run multiple times (important in notebooks)
+if logger.hasHandlers():
+    logger.handlers.clear()
+
+# Create file handler
+file_handler = logging.FileHandler(LOG_FILE_PATH)
+file_handler.setLevel(logging.ERROR)
+
+# Formatter for log lines
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# Add the handler
+logger.addHandler(file_handler)
+
+# Mock API endpoint
+API_ENDPOINT = "https://example.com/api/create_user"  # Replace with the actual API endpoint
+
+# Validate email format
+def is_valid_email(email):
+    return "@" in email and "." in email
+
+# Function to check if the user data is valid (email and role are required)
+def is_valid_user(row):
+    return bool(row.get("email")) and bool(row.get("role")) and is_valid_email(row["email"])
+
+# Function to create user via API call
+def create_user(user_data):
+    try:
+        response = requests.post(API_ENDPOINT, json=user_data)
+        if response.status_code != 201:
+            logger.error(f"Failed to create user {user_data.get('email', 'N/A')} - Status {response.status_code}")
+    except Exception as e:
+        logger.error(f"Exception while creating user {user_data.get('email', 'N/A')}: {str(e)}")
+
+# Process the CSV file and create users
+def process_csv(file_path):
+    try:
+        with open(file_path, 'r', newline='') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                # 1. Skip rows with missing email or role
+                if not is_valid_user(row):
+                    logger.error(f"Skipping row with missing or invalid fields: {row}")
+                    continue
+
+                # 2. Create the user
+                create_user(row)
+    except FileNotFoundError:
+        logger.error(f"CSV file '{file_path}' not found.")
+    except Exception as e:
+        logger.error(f"Unexpected error while reading CSV: {str(e)}")
+
+if __name__ == "__main__":
+    process_csv(CSV_FILE_PATH)
+
+    if os.path.exists(LOG_FILE_PATH) and os.path.getsize(LOG_FILE_PATH) > 0:
+        print(f"✅ Errors were logged to: {LOG_FILE_PATH}")
+    else:
+        print("✅ No errors logged. Everything worked fine.")

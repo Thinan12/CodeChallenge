@@ -1,0 +1,14 @@
+2025-04-18 09:10:50,464 - ERROR - Failed to create user alice@example.com - Status 403
+2025-04-18 09:10:50,467 - ERROR - Skipping row with missing or invalid fields: {'name': 'Bob', 'email': '', 'role': 'user'}
+2025-04-18 09:10:50,927 - ERROR - Failed to create user charlie@example.com - Status 403
+2025-04-18 09:10:51,386 - ERROR - Failed to create user david@example.com - Status 403
+2025-04-18 09:10:51,387 - ERROR - Skipping row with missing or invalid fields: {'name': 'Eve', 'email': 'eve@example', 'role': 'manager'}
+2025-04-18 09:10:51,859 - ERROR - Failed to create user frank@example.com - Status 403
+2025-04-18 09:10:51,860 - ERROR - Skipping row with missing or invalid fields: {'name': 'Grace', 'email': 'grace@example.com', 'role': ''}
+2025-04-18 09:10:51,862 - ERROR - Skipping row with missing or invalid fields: {'name': '', 'email': ' ', 'role': ' '}
+2025-04-18 09:10:52,324 - ERROR - Failed to create user hannah@example.com - Status 403
+2025-04-18 09:10:52,795 - ERROR - Failed to create user igor@example.com - Status 403
+2025-04-18 09:10:53,260 - ERROR - Failed to create user jack@example.com - Status 403
+2025-04-18 09:10:53,261 - ERROR - Skipping row with missing or invalid fields: {'name': '', 'email': ' ', 'role': ' '}
+2025-04-18 09:10:53,730 - ERROR - Failed to create user lily@example.com - Status 403
+2025-04-18 09:10:53,731 - ERROR - Skipping row with missing or invalid fields: {'name': 'Megan', 'email': '', 'role': 'admin'}
